@@ -10,18 +10,15 @@ A Python reference implementation for generating GMF files and creating syntheti
 
 The GMF standard is designed to be modular and extensible with more distributions and privacy enhancing mechanisms. Additional distributions might be available at a later date in this repository outside of the core directory.
 
+# GMF format versions and metasyn versions
 
-<!-- CONTRIBUTING -->
-## Contributing
-You can contribute to the GMF standard by giving feedback in the "Issues" tab, or by creating a pull request.
-
-To create a pull request:
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
+| GMF version | metasyn version compatibility |
+| ----------- | ----------------------------- |
+| 0.1         | metasyn < 0.4.0               |
+| 0.2         | metasyn == 0.4.0              |
+| 0.3         | metasyn == 0.5.0, 0.6.0       |
+| 1.0         | metasyn >= 0.7.0, <= 1.0.3    |
+| 1.1         | metasyn >= 1.1.0              |
 
 <!-- CONTACT -->
 ## Contact
