@@ -1,0 +1,1138 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "http://sodascience.github.io/generative_metadata_format/core/1.0/generative_metadata_format",
+    "type": "object",
+    "properties": {
+        "n_rows": {
+            "type": "number"
+        },
+        "n_columns": {
+            "type": "number"
+        },
+        "provenance": {
+            "type": "object",
+            "properties": {
+                "created by": {
+                    "type": "object"
+                },
+                "creation time": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "created by",
+                "creation time"
+            ]
+        },
+        "vars": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "enum": [
+                            "discrete",
+                            "continuous",
+                            "string",
+                            "categorical",
+                            "date",
+                            "datetime",
+                            "time"
+                        ]
+                    },
+                    "dtype": {
+                        "type": "string"
+                    },
+                    "prop_missing": {
+                        "type": "number"
+                    },
+                    "distribution": {
+                        "$ref": "#/$defs/all_dist_def"
+                    }
+                }
+            },
+            "required": [
+                "name",
+                "type",
+                "dtype",
+                "provenance",
+                "prop_missing",
+                "distribution"
+            ]
+        }
+    },
+    "required": [
+        "n_rows",
+        "n_columns",
+        "vars"
+    ],
+    "$defs": {
+        "all_dist_def": {
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.normal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "DiscreteNormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.truncated_normal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "DiscreteTruncatedNormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "number"
+                                },
+                                "upper": {
+                                    "type": "number"
+                                },
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper",
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "DiscreteUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "integer"
+                                },
+                                "upper": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.poisson"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "PoissonDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "rate": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "rate"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.unique_key"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "UniqueKeyDistribution"
+                        },
+                        "unique": {
+                            "const": true
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "integer"
+                                },
+                                "consecutive": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "consecutive"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "UniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "number"
+                                },
+                                "upper": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.normal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "NormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.lognormal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "LogNormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.truncated_normal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "TruncatedNormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "number"
+                                },
+                                "upper": {
+                                    "type": "number"
+                                },
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper",
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.exponential"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "ExponentialDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "rate": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "rate"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.multinoulli"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "MultinoulliDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "labels": {
+                                    "type": "array",
+                                    "uniqueItems": true
+                                },
+                                "probs": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "labels",
+                                "probs"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.regex"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "RegexDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "regex": {
+                                    "type": "string"
+                                },
+                                "counts": {
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "regex_data"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.regex"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "UniqueRegexDistribution"
+                        },
+                        "unique": {
+                            "const": true
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "regex": {
+                                    "type": "string"
+                                },
+                                "counts": {
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "regex_data"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.faker"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "FakerDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "faker_type": {
+                                    "type": "string"
+                                },
+                                "locale": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "faker_type",
+                                "locale"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.faker"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "UniqueFakerDistribution"
+                        },
+                        "unique": {
+                            "const": true
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "faker_type": {
+                                    "type": "string"
+                                },
+                                "locale": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "faker_type",
+                                "locale"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.freetext"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "FreeTextDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "locale": {
+                                    "type": "string"
+                                },
+                                "avg_sentences": {
+                                    "type": [
+                                        "number",
+                                        "null"
+                                    ]
+                                },
+                                "avg_words": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "locale",
+                                "avg_sentences",
+                                "avg_words"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "DateUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "string"
+                                },
+                                "upper": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "TimeUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "string"
+                                },
+                                "upper": {
+                                    "type": "string"
+                                },
+                                "precision": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper",
+                                "precision"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "DateTimeUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "string"
+                                },
+                                "upper": {
+                                    "type": "string"
+                                },
+                                "precision": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper",
+                                "precision"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "ConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "DiscreteConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "StringConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "DateTimeConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "DateConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "TimeConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "implements": {
+                            "const": "core.na"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "provenance": {
+                            "const": "builtin"
+                        },
+                        "class_name": {
+                            "const": "NADistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    },
+                    "required": [
+                        "implements",
+                        "provenance",
+                        "class_name",
+                        "parameters"
+                    ]
+                }
+            ]
+        }
+    }
+}
