@@ -1,0 +1,1370 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "http://sodascience.github.io/generative_metadata_format/core/2.1/generative_metadata_format",
+    "type": "object",
+    "properties": {
+        "gmf_version": {
+            "type": "string"
+        },
+        "relations": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "primary_table": {
+                        "type": "string"
+                    },
+                    "primary_key": {
+                        "type": "string"
+                    },
+                    "foreign_table": {
+                        "type": "string"
+                    },
+                    "foreign_key": {
+                        "type": "string"
+                    },
+                    "relation_type": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "primary_table",
+                    "primary_key",
+                    "foreign_table",
+                    "foreign_key",
+                    "relation_type"
+                ]
+            }
+        },
+        "provenance": {
+            "type": "object",
+            "properties": {
+                "created by": {
+                    "type": "object"
+                },
+                "creation time": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "created by",
+                "creation time"
+            ]
+        },
+        "tables": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "n_rows": {
+                        "type": "number"
+                    },
+                    "n_columns": {
+                        "type": "number"
+                    },
+                    "vars": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "name": {
+                                    "type": "string"
+                                },
+                                "description": {
+                                    "type": "string"
+                                },
+                                "type": {
+                                    "enum": [
+                                        "discrete",
+                                        "continuous",
+                                        "string",
+                                        "categorical",
+                                        "date",
+                                        "datetime",
+                                        "time",
+                                        "duration"
+                                    ]
+                                },
+                                "dtype": {
+                                    "type": "string"
+                                },
+                                "prop_missing": {
+                                    "type": "number"
+                                },
+                                "distribution": {
+                                    "$ref": "#/$defs/all_dist_def"
+                                }
+                            }
+                        },
+                        "required": [
+                            "name",
+                            "type",
+                            "dtype",
+                            "provenance",
+                            "prop_missing",
+                            "distribution"
+                        ]
+                    }
+                },
+                "required": [
+                    "n_rows",
+                    "n_columns",
+                    "vars"
+                ]
+            }
+        }
+    },
+    "$defs": {
+        "all_dist_def": {
+            "anyOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "DiscreteUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "integer"
+                                },
+                                "upper": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "ContinuousUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "number"
+                                },
+                                "upper": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "DateUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "string"
+                                },
+                                "upper": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "TimeUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "string"
+                                },
+                                "upper": {
+                                    "type": "string"
+                                },
+                                "precision": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper",
+                                "precision"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "DateTimeUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "string"
+                                },
+                                "upper": {
+                                    "type": "string"
+                                },
+                                "precision": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper",
+                                "precision"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.uniform"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "DurationUniformDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "string"
+                                },
+                                "upper": {
+                                    "type": "string"
+                                },
+                                "precision": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper",
+                                "precision"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.regex"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "RegexDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "regex": {
+                                    "type": "string"
+                                },
+                                "counts": {
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "regex_data"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.regex"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "UniqueRegexDistribution"
+                        },
+                        "unique": {
+                            "const": true
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "regex": {
+                                    "type": "string"
+                                },
+                                "counts": {
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "regex_data"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "ContinuousConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "DiscreteConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "integer"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "DateConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "DateTimeConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "TimeConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.constant"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "StringConstantDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "value": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "value"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.exponential"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "ExponentialDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "rate": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "rate"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.multinoulli"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "MultinoulliDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "labels": {
+                                    "type": "array",
+                                    "uniqueItems": true
+                                },
+                                "probs": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "number"
+                                    }
+                                }
+                            },
+                            "required": [
+                                "labels",
+                                "probs"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.faker"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "FakerDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "faker_type": {
+                                    "type": "string"
+                                },
+                                "locale": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "faker_type",
+                                "locale"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.faker"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "UniqueFakerDistribution"
+                        },
+                        "unique": {
+                            "const": true
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "faker_type": {
+                                    "type": "string"
+                                },
+                                "locale": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "faker_type",
+                                "locale"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.freetext"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "FreeTextDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "locale": {
+                                    "type": "string"
+                                },
+                                "avg_sentences": {
+                                    "type": [
+                                        "number",
+                                        "null"
+                                    ]
+                                },
+                                "avg_words": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "locale",
+                                "avg_sentences",
+                                "avg_words"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.poisson"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "PoissonDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "rate": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "rate"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.normal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "ContinuousNormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.lognormal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "LogNormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.truncated_normal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "DiscreteTruncatedNormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "number"
+                                },
+                                "upper": {
+                                    "type": "number"
+                                },
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper",
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.truncated_normal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "ContinuousTruncatedNormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "number"
+                                },
+                                "upper": {
+                                    "type": "number"
+                                },
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "upper",
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.normal"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "DiscreteNormalDistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "mean": {
+                                    "type": "number"
+                                },
+                                "sd": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "mean",
+                                "sd"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.unique_key"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "UniqueKeyDistribution"
+                        },
+                        "unique": {
+                            "const": true
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {
+                                "lower": {
+                                    "type": "integer"
+                                },
+                                "consecutive": {
+                                    "type": "boolean"
+                                }
+                            },
+                            "required": [
+                                "lower",
+                                "consecutive"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "core.na"
+                        },
+                        "version": {
+                            "type": "string"
+                        },
+                        "class_name": {
+                            "const": "NADistribution"
+                        },
+                        "unique": {
+                            "const": false
+                        },
+                        "parameters": {
+                            "type": "object",
+                            "properties": {},
+                            "required": []
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "class_name",
+                        "parameters"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "EqualsCondition"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "IfThenElse"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 3,
+                            "maxItems": 3
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "PlusOperator"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "MultiplyOperator"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "DivideOperator"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "SubOperator"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "PowerOperator"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "AndOperator"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "OrOperator"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "LessThanCondition"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "GreaterThanCondition"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "NotEqualsCondition"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 2,
+                            "maxItems": 2
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "NotOperator"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "type": "string"
+                        },
+                        "ref_name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "ref_name"
+                    ]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "name": {
+                            "const": "IsNull"
+                        },
+                        "operands": {
+                            "type": "array",
+                            "minItems": 1,
+                            "maxItems": 1
+                        }
+                    },
+                    "required": [
+                        "name",
+                        "operands"
+                    ]
+                }
+            ]
+        }
+    }
+}
